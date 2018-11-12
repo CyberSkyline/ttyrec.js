@@ -5,21 +5,6 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     jshint: {
       // define the files to lint
-
-      web: {
-        files: {
-          //src: ['public/js/*.js']
-        },
-        options: {
-          browser: true,
-          devel: true,
-          strict: true,
-          jquery: true,
-          unused: true,
-          trailing: true,
-          undef: true
-        }
-      },
       lib: {
         files: {
           src: ['lib/**/*.js']
