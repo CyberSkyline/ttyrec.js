@@ -1,35 +1,24 @@
 # Ttyrec.js
 
-a native implementation for encoding and decoding ttyrec files.
+A native implementation for encoding and decoding ttyrec files for node.js v10+.
 
-[![Build Status](https://travis-ci.org/jedi4ever/ttyrec.js.png)](https://travis-ci.org/jedi4ever/ttyrec.js)
-
-# Usage
-This implements a duplex / `transform` stream v2 .  Therefore only node v0.10.x is supported.
-
-It also provides a few simple executable:
-
-- `ttyrec` : records ttyrec file from the current terminal
-- `ttyplay`: plays ttyrec files
-- `ttytime`: shows the number of seconds is in the ttyrecord file
-- `ttyrec++` : similar to ttyrec but generator a json file
-
+Forked from https://github.com/jedi4ever/ttyrec.js to include changes for modern node.js. Last tested working on node v14.
 
 - See [Ttyrec format specification](http://en.wikipedia.org/wiki/Ttyrec#Technical_file_format_specification)
 - See [Ttyrec++](https://github.com/ewaters/ttyrec-plusplus)
 
 # Installation
 
-[![NPM](https://nodei.co/npm/ttyrec.png?downloads=true&stars=true)](https://nodei.co/npm/ttyrec/)
+[![NPM](https://nodei.co/npm/ttyrec.js.png?downloads=true&stars=true)](https://nodei.co/npm/ttyrec.js/)
 
-`npm install ttyrec`
+`npm install ttyrec.js`
 
 ## Write recStream
 ```js
 var fs = require('fs');
 var pty = require('pty');
 
-var ttyrec = require('ttyrec');
+var ttyrec = require('ttyrec.js');
 var ttyrecStream = new ttyrec.recStream();
 
 var fileStream = fs.createWriteStream('ttyrecord');
@@ -45,7 +34,7 @@ ttyrecStream.pipe(fileStream);
 ```js
 var fs = require('fs');
 
-var ttyrec = require('ttyrec');
+var ttyrec = require('ttyrec.js');
 var fileStream = fs.createReadStream('ttyrecord');
 
 var ttyplayStream = new ttyrec.playStream();
@@ -61,7 +50,7 @@ ttyplayStream.pipe(process.stdout);
 ```js
 var fs = require('fs');
 
-var ttyrec = require('ttyrec');
+var ttyrec = require('ttyrec.js');
 var fileStream = fs.createReadStream('ttyrecord');
 
 var ttyparseStream = new ttyrec.parseStream();
@@ -78,7 +67,7 @@ ttyparseStream.on('data', function(record) {
 
 ## Encode
 ```js
-var ttyrec = require('ttyrec');
+var ttyrec = require('ttyrec.js');
 var encoder = ttyrec.encoder;
 var sec = 0;
 var usec = 10;
@@ -87,7 +76,7 @@ var record = encoder.encode(sec, usec, new Buffer('abc');
 
 ## Decode (parseBuffer)
 ```js
-var ttyrec = require('ttyrec');
+var ttyrec = require('ttyrec.js');
 var decoder = ttyrec.decoder;
 var results = decoder.decode(arecord);
 
@@ -106,11 +95,9 @@ console.log(packet.toString());
 
 # Limitations
 - only handles buffer streams(non-encoded streams)
-- only works versions v0.10.x (for v0.11 pty.js needs to be patched first)
 
 # Todo
 - enhance the executables to mimic arguments from real ttyrec and ttyplay (almost, need peek + help)
-- make v0.11 and v0.8 compatible
 - handle special resizing escape codes for ttyrec
 - browserify this code (almost, only process.hrtime does not exist in browser)
 - help page
